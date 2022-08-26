@@ -1,0 +1,75 @@
+<div class="container-fluid mt-5" >
+    <form #userForm = "ngForm" (ngSubmit)="onSubmit()">
+        <p>form values</p>
+        {{userForm.value | json}}<hr>
+        <p>pre defined values</p>
+        {{userDetails | json}}
+
+        <div class="form-group mb-3" >
+            <label class="col-sm-2 control-label" for="textinput">Name</label>
+            <div class="col-sm-10">
+                <input type="text" name="name" placeholder="Enter Full Name" class="form-control"  #name="ngModel" [style.background-color]="name.invalid && name.touched?'red':'yellow'" [(ngModel)]="userDetails.name" required>
+            </div>
+            <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is Required</small>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="col-sm-2 control-label" for="textinput">Age</label>
+            <div class="col-sm-10">
+                <input type="number" name="age" placeholder="Enter Age" class="form-control" [(ngModel)]="userDetails.age"
+                    required #age="ngModel" [style.background-color]="age.invalid && age.touched? 'red':'yellow' ">
+            </div>
+            <small class="text-danger" [class.d-none]="age.valid || age.untouched" >Age is Required</small>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="col-sm-2 control-label" for="textinput">Email</label>
+            <div class="col-sm-10">
+                <input type="text" name="email" placeholder="Enter Email ID" class="form-control"
+                [(ngModel)]="userDetails.email" required  #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" [style.background-color]="email.invalid && email.touched?'red':'yellow'">
+            </div>
+            <small class="text-danger" [class.d-none]="email.valid || email.untouched">Please enter a valid email id</small>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="col-sm-2 control-label" for="textinput">Password</label>
+            <div class="col-sm-10">
+                <input type="password" name="password" placeholder="Enter Password" class="form-control"
+                [(ngModel)]="userDetails.password"  required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" #password="ngModel" [style.background-color]="password.invalid && password.touched?'red':'yellow'">
+            </div>
+            <small class="text-danger" [class.d-none]="password.valid || password.untouched">Please enter a valid Password</small>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="col-sm-2 control-label" for="textinput">Mobile Number</label>
+            <div class="col-sm-10">
+                <input type="number" pattern="^\d{10}$"  name="phonenumber" placeholder="Enter Mobile Number" class="form-control"
+                [(ngModel)]="userDetails.phone"  required   #phone="ngModel" [style.background-color]="phone.invalid && phone.touched? 'red':'yellow'">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label>Gender</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" value="male" [(ngModel)]="userDetails.gender">
+                <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" value="female" [(ngModel)]="userDetails.gender">
+                <label class="form-check-label">Female</label>
+            </div>
+        </div>
+
+
+        <div class="form-group mb-3">
+            <label class="col-sm-2 control-label" for="textinput">Country</label>
+            <div class="col-sm-10">
+                <select name="country" class="custom-select" [(ngModel)]="userDetails.country">
+                    <option *ngFor="let i of countries">{{i}}</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" [disabled]="userForm.form.invalid">Submit Form</button>
+    </form>
+</div>
