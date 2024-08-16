@@ -1,0 +1,25 @@
+.add-book-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.checkbox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin: 8px 0px 8px 0px;
+}
+
+label {
+    color: white;
+}
+
+.price {
+    display: flex;
+    label {
+        margin: 0px 10px 0px 10px;
+    }
+}

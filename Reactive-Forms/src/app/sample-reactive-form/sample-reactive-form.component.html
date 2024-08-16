@@ -1,0 +1,42 @@
+<form class="add-book-form" [formGroup]="addBookForm" (ngSubmit)="save()">
+    <div class="form-group">
+        <label for="FormatType">File Extension</label><br>
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="FormatType" value="pdf"> .pdf
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="FormatType" value="doc"> .doc
+      </div>
+    <div class="form-group">
+      <label for="Title">Title</label>
+      <input type="text" class="form-control" id="Title" formControlName="title">
+    </div>
+    <div class="form-group">
+      <label for="Author">Author:</label>
+      <input type="text" class="form-control" id="Author" formControlName="author">
+    </div>
+    <div class="form-group">
+        <label for="PageCount">Number of pages:</label>
+        <input type="number" class="form-control" id="PageCount" formControlName="pages">
+    </div>
+    <div class="form-group price" formGroupName="price">
+      <label for="Price">Price:</label>
+      <select name="price" aria-placeholder="Price" class="form-select" formControlName="value">
+        <option *ngFor="let price of prices" [value]="price.value"> {{ price.viewValue }} </option>
+      </select>
+      <label for="Price">Currency:</label>
+      <select name="price" aria-placeholder="Price" class="form-select" formControlName="currency" style="width: 50px;">
+          <option *ngFor="let c of currency" [value]="c.value"> {{ c.viewValue }} </option>
+      </select>
+    </div>
+    <div class="form-group">
+        <label for="PublishedDate">Published Date</label>
+        <input type="date" class="form-control" id="PublishedDate" formControlName="publishedDate">
+    </div><br>
+    <div class="form-check form-switch">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Is book published?</label>
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" formControlName="isPublished">
+    </div><br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <div style="color:white">
+    {{ addBookForm.value | json }}
+  </div>
