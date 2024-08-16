@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { log } from 'console';
+import { BookFormService } from './book-form.service';
 
 @Component({
   selector: 'app-sample-reactive-form',
@@ -9,15 +10,15 @@ import { log } from 'console';
 })
 export class SampleReactiveFormComponent {
 
-  constructor() {}
+  constructor(private bookServ: BookFormService) {}
   ngOnInit(): void {
     this.initForm();
   }
 
   prices: any[] = [
-    { value: 100, viewValue: '$ 100'},
-    { value: 200, viewValue: '$ 200'},
-    { value: 300, viewValue: '$ 300'}
+    { value: 100, viewValue: '100'},
+    { value: 200, viewValue: '200'},
+    { value: 300, viewValue: '300'}
   ];
 
   currency: any[] = [
@@ -48,6 +49,7 @@ export class SampleReactiveFormComponent {
       console.log(this.addBookForm);
       console.log('FormGroup Values');
       console.log(this.addBookForm.value);
+      this.bookServ.add(this.addBookForm.value);
     }
 
   }
