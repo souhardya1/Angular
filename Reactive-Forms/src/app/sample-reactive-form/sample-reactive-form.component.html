@@ -7,14 +7,24 @@
     <div class="form-group">
       <label for="Title">Title</label>
       <input type="text" class="form-control" id="Title" formControlName="title">
+      <label class="validationErrors" *ngIf="addBookForm.get('title')?.invalid && addBookForm.get('title')?.touched">
+        <span *ngIf="addBookForm.get('title')?.errors?.minlength">Minimum length is 5</span>
+        <span *ngIf="addBookForm.get('title')?.errors?.required">This is required</span>
+      </label>
     </div>
     <div class="form-group">
       <label for="Author">Author:</label>
       <input type="text" class="form-control" id="Author" formControlName="author">
+      <label class="validationErrors" *ngIf="addBookForm.get('author')?.invalid && addBookForm.get('author')?.touched">
+        <span *ngIf="addBookForm.get('author')?.errors?.required">This is required</span>
+      </label>
     </div>
     <div class="form-group">
         <label for="PageCount">Number of pages:</label>
         <input type="number" class="form-control" id="PageCount" formControlName="pages">
+        <label class="validationErrors" *ngIf="addBookForm.get('pages')?.invalid && addBookForm.get('pages')?.touched">
+          <span *ngIf="addBookForm.get('pages')?.errors?.required">This is required</span>
+        </label>
     </div>
     <div class="form-group price" formGroupName="price">
       <label for="Price">Price:</label>
@@ -29,6 +39,9 @@
     <div class="form-group">
         <label for="PublishedDate">Published Date</label>
         <input type="date" class="form-control" id="PublishedDate" formControlName="publishedDate">
+        <label class="validationErrors" *ngIf="addBookForm.get('publishedDate')?.invalid && addBookForm.get('publishedDate')?.touched">
+          <span *ngIf="addBookForm.get('publishedDate')?.errors?.required">This is required</span>
+        </label>
     </div><br>
     <div class="form-check form-switch">
       <label class="form-check-label" for="flexSwitchCheckDefault">Is book published?</label>
@@ -43,4 +56,12 @@
 
   <div style="color:white">
     {{ addBookForm.value | json }}
+    <div class="validations">
+      title: {{ addBookForm.get('title')?.valid ? '' : addBookForm.get('title')?.errors | json}}<br>
+      author: {{ addBookForm.get('author')?.valid ? '' : addBookForm.get('author')?.errors | json}}<br>
+      pages: {{ addBookForm.get('pages')?.valid ? '' : addBookForm.get('pages')?.errors | json}}<br>
+      price: {{ addBookForm.get('price')?.valid ? '' : addBookForm.get('price')?.errors | json}}<br>
+      publishedDate: {{ addBookForm.get('publishedDate')?.valid ? '' : addBookForm.get('publishedDate')?.errors | json}}<br>
+      isPublished: {{ addBookForm.get('isPublished')?.valid ? '' : addBookForm.get('isPublished')?.errors | json}}<br>
+    </div>
   </div>

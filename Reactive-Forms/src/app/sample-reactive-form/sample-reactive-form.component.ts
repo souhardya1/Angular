@@ -32,7 +32,7 @@ export class SampleReactiveFormComponent {
 
   private initForm(): void {
     this.addBookForm = new FormGroup({
-      title: new FormControl(null,Validators.required),
+      title: new FormControl(null,[Validators.required,Validators.minLength(5)]),
       author: new FormControl(null,Validators.required),
       pages: new FormControl(null,Validators.required),
       price: new FormGroup({
