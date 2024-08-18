@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { log } from 'console';
 import { BookFormService } from './book-form.service';
+import { title } from 'process';
 
 @Component({
   selector: 'app-sample-reactive-form',
@@ -31,15 +32,15 @@ export class SampleReactiveFormComponent {
 
   private initForm(): void {
     this.addBookForm = new FormGroup({
-      title: new FormControl(),
-      author: new FormControl(),
-      pages: new FormControl(),
+      title: new FormControl(null,Validators.required),
+      author: new FormControl(null,Validators.required),
+      pages: new FormControl(null,Validators.required),
       price: new FormGroup({
-        currency: new FormControl(),
-        value: new FormControl()
+        currency: new FormControl(null,Validators.required),
+        value: new FormControl(null,Validators.required)
       }),
-      publishedDate: new FormControl(),
-      isPublished: new FormControl(),
+      publishedDate: new FormControl(null,Validators.required),
+      isPublished: new FormControl(false),
     });
   }
 
@@ -51,7 +52,22 @@ export class SampleReactiveFormComponent {
       console.log(this.addBookForm.value);
       this.bookServ.add(this.addBookForm.value);
     }
-
   }
 
+  initSingleValues() {
+    this.addBookForm.patchValue({
+      title: 'Good book'
+    });
+  }
+
+  initAllValues() {
+    this.addBookForm.setValue({
+      title: 'Better book',
+      author: 'Souhardya',
+      pages: 100,
+      price: {currency:'USD', value:500},
+      publishedDate: '2022-08-19',
+      isPublished: true
+    });
+  }
 }
