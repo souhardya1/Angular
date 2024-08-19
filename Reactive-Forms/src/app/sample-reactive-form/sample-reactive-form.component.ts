@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { log } from 'console';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BookFormService } from './book-form.service';
-import { title } from 'process';
 
 @Component({
   selector: 'app-sample-reactive-form',
@@ -11,7 +9,7 @@ import { title } from 'process';
 })
 export class SampleReactiveFormComponent {
 
-  constructor(private bookServ: BookFormService) {}
+  constructor(private bookServ: BookFormService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -54,19 +52,19 @@ export class SampleReactiveFormComponent {
   addBookForm: FormGroup;
 
   private initForm(): void {
-    this.addBookForm = new FormGroup({
-      title: new FormControl(null,[Validators.required,Validators.minLength(5)]),
-      author: new FormControl(null,Validators.required),
-      pages: new FormControl(null,Validators.required),
-      price: new FormGroup({
-        currency: new FormControl(null,Validators.required),
-        value: new FormControl(null,Validators.required)
+    this.addBookForm = this.fb.group({
+      title: ['no title',[Validators.required,Validators.minLength(5)]],
+      author: ['Souhardya',Validators.required],
+      pages: [0,Validators.required],
+      price: this.fb.group({
+        currency:['USD',Validators.required],
+        value:['100',Validators.required]
       }),
-      publishedDate: new FormControl(null,Validators.required),
-      isPublished: new FormControl(false),
-      formatType: new FormControl(),
-      pdfFormat: new FormControl(),
-      docFormat: new FormControl()
+      publishedDate: ['',Validators.required],
+      isPublished: '',
+      formatType: '',
+      pdfFormat: '',
+      docFormat:''
     });
   }
 
