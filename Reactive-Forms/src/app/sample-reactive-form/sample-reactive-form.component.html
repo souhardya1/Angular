@@ -1,22 +1,36 @@
 <form class="add-book-form" [formGroup]="addBookForm" (ngSubmit)="save()">
-    <div class="form-group">
+    <div class="form-group" style="color: white;">
         <label for="FormatType">File Extension</label><br>
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="FormatType" value="pdf"> .pdf
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="FormatType" value="doc"> .doc
-      </div>
+        <input class="form-check-input" type="radio" name="formatType" id="FormatType" value="pdf" formControlName="formatType"> .pdf
+        <input class="form-check-input" type="radio" name="formatType" id="FormatType" value="doc" formControlName="formatType"> .doc
+    </div>
+    <div class="form-group">
+      <label for="docFormat">Doc Format</label>
+      <input type="text" class="form-control" id="docFormat" formControlName="docFormat">
+      <label class="validationErrors" *ngIf="docErrorMessage">
+        {{docErrorMessage}}
+      </label>
+
+    </div>
+    <div class="form-group">
+      <label for="pdfFormat">PDF Format</label>
+      <input type="text" class="form-control" id="pdfFormat" formControlName="pdfFormat">
+      <label class="validationErrors" *ngIf="pdfErrorMessage">
+        {{pdfErrorMessage}}
+      </label>
+    </div>
     <div class="form-group">
       <label for="Title">Title</label>
       <input type="text" class="form-control" id="Title" formControlName="title">
-      <label class="validationErrors" *ngIf="addBookForm.get('title')?.invalid && addBookForm.get('title')?.touched">
-        <span *ngIf="addBookForm.get('title')?.errors?.minlength">Minimum length is 5</span>
-        <span *ngIf="addBookForm.get('title')?.errors?.required">This is required</span>
+      <label class="validationErrors" *ngIf="titleErrorMessage">
+        {{titleErrorMessage}}
       </label>
     </div>
     <div class="form-group">
       <label for="Author">Author:</label>
       <input type="text" class="form-control" id="Author" formControlName="author">
-      <label class="validationErrors" *ngIf="addBookForm.get('author')?.invalid && addBookForm.get('author')?.touched">
-        <span *ngIf="addBookForm.get('author')?.errors?.required">This is required</span>
+      <label class="validationErrors" *ngIf="authorErrorMessage">
+        {{authorErrorMessage}}
       </label>
     </div>
     <div class="form-group">

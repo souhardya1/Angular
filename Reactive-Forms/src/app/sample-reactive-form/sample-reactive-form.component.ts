@@ -12,8 +12,26 @@ import { title } from 'process';
 export class SampleReactiveFormComponent {
 
   constructor(private bookServ: BookFormService) {}
+
   ngOnInit(): void {
     this.initForm();
+    const titleControl = this.addBookForm.get('title');
+    const authorControl = this.addBookForm.get('author');
+    const formatTypeControl = this.addBookForm.get('formatType');
+
+
+    titleControl?.valueChanges.pipe().subscribe(i => {
+      this.validateControl(titleControl as FormControl,'title');
+    });
+
+    authorControl?.valueChanges.pipe().subscribe(i => {
+      this.validateControl(authorControl as FormControl,'author');
+    });
+
+    formatTypeControl?.valueChanges.pipe().subscribe(i => {
+      console.log(formatTypeControl.value)
+      this.formatTypeChanged(formatTypeControl.value);
+    });
   }
 
   prices: any[] = [
@@ -28,6 +46,11 @@ export class SampleReactiveFormComponent {
     { value: 'EURO', viewValue: '€'}
   ];
 
+  titleErrorMessage: string;
+  authorErrorMessage: string;
+  pdfErrorMessage:string;
+  docErrorMessage:string;
+
   addBookForm: FormGroup;
 
   private initForm(): void {
@@ -41,6 +64,9 @@ export class SampleReactiveFormComponent {
       }),
       publishedDate: new FormControl(null,Validators.required),
       isPublished: new FormControl(false),
+      formatType: new FormControl(),
+      pdfFormat: new FormControl(),
+      docFormat: new FormControl()
     });
   }
 
@@ -69,5 +95,43 @@ export class SampleReactiveFormComponent {
       publishedDate: '2022-08-19',
       isPublished: true
     });
+  }
+
+  private validateControl(control: FormControl, controlName: string): void {
+    this.titleErrorMessage = '';
+    this.authorErrorMessage = '';
+    if(control.errors && (control.touched || control.dirty) ) {
+      if (control.errors?.required) {
+        if(controlName == 'title'){
+          this.titleErrorMessage = "This field is required";
+        }
+        if(controlName == 'author') {
+          this.authorErrorMessage = "This field is required";
+        }
+      }
+      else if(control.errors?.minlength){
+        this.titleErrorMessage = "Minimum Length is "+control.errors?.minlength?.requiredLength;
+      }
+    }
+  }
+
+  private formatTypeChanged(type:string){
+    const pdfControl = this.addBookForm.get('pdfFormat');
+    const docControl = this.addBookForm.get('docFormat');
+
+    if(type === 'pdf'){
+      this.pdfErrorMessage = "this field is required";
+      this.docErrorMessage = '';
+      pdfControl?.addValidators(Validators.required);
+      docControl?.clearValidators();
+    }
+    else{
+      if(type === 'doc'){
+        this.docErrorMessage = "this field is required";
+        this.pdfErrorMessage = '';
+        docControl?.addValidators(Validators.required);
+        pdfControl?.clearValidators();
+      }
+    }
   }
 }
